@@ -1,0 +1,57 @@
+{
+  "name": "ascend",
+  "version": "0.1.0",
+  "description": "Altar Server Management System - Desktop & Mobile App",
+  "main": "main.js",
+  "homepage": "./",
+  "author": "Sam Patry",
+  "license": "GPL-3.0",
+  "scripts": {
+    "start": "electron .",
+    "dev": "cross-env NODE_ENV=development electron .",
+    "build": "react-scripts build && electron-builder",
+    "build-mac": "electron-builder --mac",
+    "build-win": "electron-builder --win",
+    "build-linux": "electron-builder --linux"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "electron": "^latest",
+    "electron-builder": "^latest",
+    "cross-env": "^7.0.3"
+  },
+  "build": {
+    "appId": "com.ascendapp.altar",
+    "productName": "Ascend",
+    "directories": {
+      "buildResources": "../docs"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "AppImage"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
