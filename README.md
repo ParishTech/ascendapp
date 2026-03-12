@@ -3,7 +3,7 @@
 **Open-source altar server management system for Catholic parishes.**
 
 Ascend helps parishes track volunteer hours, performance, and training for altar servers—while providing spiritual resources and building a community of growing servants.
-
+**THIS IS UNDER DEVELOPMENT, CODE WILL BE PUSHED WHEN I FINALIZE IT.**
 
 ## Features
 
