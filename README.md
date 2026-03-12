@@ -2,9 +2,7 @@
 
 **Open-source altar server management system for Catholic parishes.**
 
-Ascend helps parishes track volunteer hours, performance, and training for altar servers—while providing spiritual resources and building a community of growing servants.
-
-**THIS IS UNDER DEVELOPMENT, CODE WILL BE PUSHED WHEN I FINALIZE IT.**
+Ascend helps parishes track volunteer hours, performance, and training for altar servers while providing spiritual resources and building a community of growing servants.
 
 ## Features
 
@@ -19,130 +17,139 @@ Ascend helps parishes track volunteer hours, performance, and training for altar
 
 ## Tech Stack
 
-- **Frontend**: React + TypeScript, Tailwind CSS
-- **Backend**: Node.js + Express, JWT authentication
-- **Database**: PostgreSQL
-- **APIs**: Claude API (prayer generation), Bible API (scripture), Anthropic SDK
-- **Deployment**: Vercel (frontend), Railway/Render (backend)
+- **Frontend**: PHP + HTML + CSS + JavaScript (LEMP stack)
+- **Backend**: PHP with MariaDB
+- **Database**: MariaDB
+- **Python Services**: Claude API (prayer generation), Bible API (scripture)
+- **Desktop/Mobile App**: Electron (wraps web app for macOS, Windows, Linux, iOS, Android, and all Linux Mobile Distros)
+- **Hosting**: Your own Ubuntu server
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
-- PostgreSQL 12+
-- npm or yarn
-- Preferably a Linux server (ex. Ubuntu 24.04, Fedora, etc.)
+- Ubuntu 20.04+ server
+- Apache2 or Nginx
+- MariaDB 10.3+
+- PHP 7.4+
+- Python 3.8+
+- Node.js 14+ (for Electron builds only)
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/samptry/ascend.git
-   cd ascend
+   git clone https://github.com/ParishTech/ascendapp.git
+   cd ascendapp
    ```
 
-2. **Set up the backend**
+2. **Set up MariaDB**
    ```bash
-   cd backend
-   npm install
+   sudo mysql -u root -p < database/schema.sql
    ```
 
-   Create a `.env` file:
-   ```
-   DATABASE_URL=postgresql://user:password@localhost:5432/ascend
-   JWT_SECRET=your_jwt_secret_here
-   CLAUDE_API_KEY=your_claude_api_key
-   BIBLE_API_KEY=your_bible_api_key
-   NODE_ENV=development
-   ```
-
-   Run database migrations:
+   Create MariaDB user:
    ```bash
-   npm run migrate
+   sudo mysql -u root -p
+   CREATE USER 'ascend_user'@'localhost' IDENTIFIED BY 'secure_password';
+   GRANT ALL PRIVILEGES ON ascend.* TO 'ascend_user'@'localhost';
+   FLUSH PRIVILEGES;
    ```
 
-   Start the backend:
+3. **Set up PHP application**
    ```bash
-   npm run dev
+   sudo cp -r html/* /var/www/html/
+   sudo cp -r api/* /var/www/html/api/
+   sudo chown -R www-data:www-data /var/www/html/
+   sudo mkdir -p /var/www/html/logs
+   sudo chmod 777 /var/www/html/logs
    ```
 
-3. **Set up the frontend**
+4. **Set up Python service**
    ```bash
-   cd ../frontend
-   npm install
+   cd python
+   pip3 install -r requirements.txt
    ```
 
-   Create a `.env.local` file:
-   ```
-   REACT_APP_API_URL=http://localhost:5000
-   ```
-
-   Start the frontend:
+   Create systemd service (see docs/SETUP.md for details):
    ```bash
-   npm start
+   sudo nano /etc/systemd/system/ascend-prayers.service
+   sudo systemctl daemon-reload
+   sudo systemctl enable ascend-prayers
+   sudo systemctl start ascend-prayers
    ```
 
-The app will be available at `http://localhost:3000`.
+5. **Configure environment variables**
+   ```bash
+   cp .env.example .env
+   # Edit .env and add your API keys
+   ```
+
+The app will be available at `http://localhost` (or your server's IP/domain).
 
 ## Project Structure
 
 ```
 ascend/
-├── backend/              # Node.js/Express API
-│   ├── src/
-│   │   ├── routes/       # API endpoints
-│   │   ├── models/       # Database models
-│   │   ├── middleware/   # Auth, validation
-│   │   ├── services/     # Business logic
-│   │   └── utils/        # Helpers (Claude API, Bible API)
-│   ├── migrations/       # Database migrations
-│   └── package.json
-├── frontend/             # React web app
-│   ├── src/
-│   │   ├── pages/        # Dashboard, clock in, performance, prayers
-│   │   ├── components/   # Reusable UI components
-│   │   ├── hooks/        # Custom React hooks
-│   │   ├── api/          # API client functions
-│   │   └── styles/       # Tailwind config
-│   └── package.json
-├── docs/                 # Logo, design files, documentation
-├── LICENSE               # MIT License
-└── README.md             # This file
+├── html/                      # PHP Frontend (LEMP Stack)
+│   ├── index.php              # Home page
+│   ├── login.php              # Login form
+│   ├── dashboard.php          # Main dashboard
+│   ├── clock.php              # Clock in/out interface
+│   ├── prayers.php            # Prayers & scripture
+│   ├── css/
+│   │   └── style.css          # Responsive styling
+│   └── js/
+│       ├── api-client.js      # API communication
+│       └── dashboard.js       # Dashboard logic
+│
+├── api/                       # PHP Backend API
+│   ├── config.php             # Configuration & constants
+│   ├── database.php           # Database wrapper class
+│   ├── auth.php               # Authentication endpoints
+│   ├── clock.php              # Clock in/out endpoints
+│   └── notes.php              # Performance notes endpoints
+│
+├── python/                    # Python Services
+│   ├── prayer_service.py      # Claude API + Bible API
+│   └── requirements.txt       # Python dependencies
+│
+├── electron/                  # Desktop/Mobile App
+│   ├── main.js                # Electron main process
+│   └── package.json           # Electron build config
+│
+├── database/                  # Database Schema
+│   └── schema.sql             # Complete MariaDB schema
+│
+├── docs/
+│   └── SETUP.md               # Detailed setup guide
+│
+├── .env.example               # Environment variables template
+└── LICENSE                    # GNU GPL-3.0 License
 ```
 
-## API Endpoints (Overview)
+## API Endpoints
 
 ### Authentication
-- `POST /auth/register` — Create a new account
-- `POST /auth/login` — Login and get JWT token
-- `POST /auth/refresh` — Refresh access token
-
-### Servers
-- `GET /servers` — List all servers (admins only)
-- `GET /servers/:id` — Get server profile and stats
-- `PUT /servers/:id` — Update server info
+- `POST /api/auth.php?action=register` — Create a new account
+- `POST /api/auth.php?action=login` — Login and get session token
+- `POST /api/auth.php?action=logout` — Logout and invalidate token
+- `GET /api/auth.php?action=verify` — Verify current token
 
 ### Clock System
-- `POST /clock/in` — Clock in for a mass
-- `POST /clock/out` — Clock out from a mass
-- `GET /clock/history` — Get clock-in/out history for a server
+- `POST /api/clock.php?action=in` — Clock in for a mass
+- `POST /api/clock.php?action=out` — Clock out from a mass
+- `GET /api/clock.php?action=history` — Get clock-in/out history
+- `GET /api/clock.php?action=current` — Get current clock status
 
 ### Performance Notes
-- `POST /notes` — MC logs performance notes for a server
-- `GET /notes/:serverId` — Get feedback history for a server
-- `POST /notes/:noteId/referral` — Create training referral
-
-### Training
-- `GET /training/history` — Get training history
-- `POST /training/complete` — Mark training session as completed
-- `GET /training/pending` — Get pending training referrals
+- `POST /api/notes.php?action=add` — MC logs performance notes
+- `GET /api/notes.php?action=get` — Get notes for a mass
+- `GET /api/notes.php?action=server` — Get feedback history for a server
+- `POST /api/notes.php?action=referral` — Create training referral
 
 ### Prayers & Resources
-- `GET /prayers/daily` — Get today's AI-generated prayer
-- `GET /prayers/vesting` — Get vesting prayers
-- `GET /prayers/rosary` — Get rosary mysteries
-- `GET /scripture/daily` — Get scripture reading of the day
+- Daily prayers and scripture are served via the frontend (static content + Python service generation)
 
 ## Contributing
 
@@ -158,7 +165,7 @@ Contributions are welcome! This is an open-source project designed to serve the 
 
 ### Development Guidelines
 
-- Follow the existing code style (ESLint + Prettier)
+- Follow PHP PSR-12 code style
 - Write meaningful commit messages
 - Test your changes locally before pushing
 - Update documentation for new features
@@ -166,11 +173,12 @@ Contributions are welcome! This is an open-source project designed to serve the 
 
 ### Areas Looking for Help
 
-- **Frontend**: UI/UX improvements, accessibility, mobile responsiveness
-- **Backend**: API optimization, error handling, testing coverage
-- **Documentation**: Guides for parishes, API docs, deployment instructions
+- **Frontend**: UI/UX improvements, accessibility, additional PHP pages (profile, training management)
+- **Backend**: Error handling, validation improvements, additional API endpoints
+- **Python Services**: Additional prayer generation logic, better scripture integration
+- **Documentation**: Deployment guides, troubleshooting, parish setup tutorials
 - **Localization**: Spanish and other language translations for prayers and UI
-- **Features**: Training modules, advanced reporting, integration with parish management systems
+- **Electron Build**: Packaging for iOS/Android using Capacitor, auto-update system
 
 ## License
 
@@ -180,9 +188,9 @@ This means you're free to use, modify, and distribute this software. Any modific
 
 ## Support
 
-- **Issues**: Report bugs or request features on [GitHub Issues](https://github.com/samptry/ascend/issues)
-- **Discussions**: Ask questions and discuss ideas on [GitHub Discussions](https://github.com/samptry/ascend/discussions)
-- **Email**: spatryreal@gmail.com OR sanctorumfidei@gmail.com
+- **Issues**: Report bugs or request features on [GitHub Issues](https://github.com/ParishTech/ascendapp/issues)
+- **Discussions**: Ask questions and discuss ideas on [GitHub Discussions](https://github.com/ParishTech/ascendapp/discussions)
+- **Email**: Contact your parish administrator
 
 ## Acknowledgments
 
