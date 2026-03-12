@@ -31,6 +31,7 @@ Ascend helps parishes track volunteer hours, performance, and training for altar
 - Node.js 18+
 - PostgreSQL 12+
 - npm or yarn
+- Preferably a Linux server (ex. Ubuntu 24.04, Fedora, etc.)
 
 ### Installation
 
@@ -180,7 +181,7 @@ This means you're free to use, modify, and distribute this software. Any modific
 
 - **Issues**: Report bugs or request features on [GitHub Issues](https://github.com/samptry/ascend/issues)
 - **Discussions**: Ask questions and discuss ideas on [GitHub Discussions](https://github.com/samptry/ascend/discussions)
-- **Email**: sam@example.com (replace with your actual contact)
+- **Email**: spatryreal@gmail.com OR sanctorumfidei@gmail.com
 
 ## Acknowledgments
 
