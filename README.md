@@ -204,3 +204,4 @@ Ascend was built to serve Catholic altar servers and the parishes that support t
 **In the spirit of the liturgy:** *May this tool help altar servers grow in their vocation, deepen their faith, and serve the Church with joy and fidelity.*
 
 Pax Christi.
+*St. Tarcisius, pray for us*
