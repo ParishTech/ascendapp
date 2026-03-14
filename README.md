@@ -22,7 +22,7 @@ Ascend helps parishes track volunteer hours, performance, and training for altar
 - **Database**: MariaDB
 - **Python Services**: Claude API (prayer generation), Bible API (scripture)
 - **Desktop/Mobile App**: Electron (wraps web app for macOS, Windows, Linux, iOS, Android, All Unix or Unix-like systems and all Linux Mobile Distros)
-- **Hosting**: Your own Ubuntu server
+- **Hosting**: VPS, or Your own server
 
 ## Getting Started
 
