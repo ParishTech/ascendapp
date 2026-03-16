@@ -21,8 +21,8 @@ Ascend helps parishes track volunteer hours, performance, and training for altar
 - **Backend**: PHP with MariaDB
 - **Database**: MariaDB
 - **Python Services**: Claude API (prayer generation), Bible API (scripture)
-- **Desktop/Mobile App**: Electron (wraps web app for macOS, Windows, Linux, iOS, Android, and all Linux Mobile Distros)
-- **Hosting**: Your own Ubuntu server
+- **Desktop/Mobile App**: Electron (wraps web app for macOS, Windows, Linux, iOS, Android, All Unix or Unix-like systems and all Linux Mobile Distros)
+- **Hosting**: VPS, or Your own server
 
 ## Getting Started
 
@@ -204,3 +204,4 @@ Ascend was built to serve Catholic altar servers and the parishes that support t
 **In the spirit of the liturgy:** *May this tool help altar servers grow in their vocation, deepen their faith, and serve the Church with joy and fidelity.*
 
 Pax Christi.
+*St. Tarcisius, pray for us*
