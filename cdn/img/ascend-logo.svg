@@ -1,0 +1,46 @@
+<svg width="480" height="120" viewBox="0 0 480 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8c86a"/>
+      <stop offset="100%" stop-color="#b8821e"/>
+    </linearGradient>
+    <linearGradient id="navyG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#162847"/>
+      <stop offset="100%" stop-color="#0d1b35"/>
+    </linearGradient>
+    <linearGradient id="shineG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.07)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Badge circle -->
+  <circle cx="60" cy="58" r="50" fill="url(#navyG)"/>
+  <circle cx="60" cy="58" r="50" fill="none" stroke="url(#goldG)" stroke-width="1.2" opacity="0.65"/>
+  <circle cx="60" cy="58" r="50" fill="url(#shineG)"/>
+  <circle cx="60" cy="58" r="43" fill="none" stroke="rgba(196,146,42,0.18)" stroke-width="0.75"/>
+
+  <!-- Cross -->
+  <rect x="55.5" y="24" width="9" height="68" rx="2.5" fill="url(#goldG)"/>
+  <rect x="35"   y="53" width="50" height="9"  rx="2.5" fill="url(#goldG)"/>
+
+  <!-- Subtle rays -->
+  <line x1="60" y1="18" x2="60" y2="8"  stroke="url(#goldG)" stroke-width="1.2" opacity="0.28" stroke-linecap="round"/>
+  <line x1="51" y1="21" x2="45" y2="13" stroke="url(#goldG)" stroke-width="0.9" opacity="0.18" stroke-linecap="round"/>
+  <line x1="69" y1="21" x2="75" y2="13" stroke="url(#goldG)" stroke-width="0.9" opacity="0.18" stroke-linecap="round"/>
+
+  <!-- Wordmark -->
+  <text x="126" y="68"
+    font-family="'Playfair Display', Georgia, serif"
+    font-size="54" font-weight="700"
+    fill="#f4f0e8" letter-spacing="-0.5">Ascend</text>
+
+  <!-- Tagline -->
+  <text x="128" y="90"
+    font-family="'Lora', Georgia, serif"
+    font-size="13" font-weight="400" font-style="italic"
+    fill="#c4922a" letter-spacing="0.3">Altar Server Management</text>
+
+  <!-- Rule -->
+  <line x1="128" y1="97" x2="472" y2="97" stroke="url(#goldG)" stroke-width="0.6" opacity="0.4"/>
+</svg>
