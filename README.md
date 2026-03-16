@@ -1,3 +1,9 @@
+<p align="center">
+  <img src="cdn/img/ascend-logo.svg" alt="Ascend" width="420">
+</p>
+
+<br>
+
 # Ascend
 
 **Open-source altar server management system for Catholic parishes.**
